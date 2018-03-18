@@ -1,10 +1,18 @@
-const express = require('express');
+var app = require('express')();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-const app = express();
-const port = process.env.PORT || 8082;
-
-app.get('/api/hello', (req, res) => {
-  res.send({ express: 'Hello From Express' });
+app.get('/', function(req, res){
+  res.sendFile(__dirname + '/index.html');
 });
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+io.on('connection', function(socket){
+  console.log('a user connected');
+  socket.on('disconnect', function(){
+    console.log('user disconnected');
+  });
+});
+
+http.listen(9000, function(){
+  console.log('listening on *:9000');
+});
