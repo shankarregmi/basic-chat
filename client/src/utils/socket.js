@@ -1,9 +1,13 @@
-const io = window.io || undefined;
+import io from 'socket.io-client';
+
+let socket;
 
 export const connect = () => {
   try {
-    return io();
+    socket = io.connect('http://localhost:9000');
+
+    return socket;
   } catch (ioNotBoundErr) {
-    throw new Error('IO is not available on window');
+    throw new Error('Unable to connect to socket server');
   }
 };

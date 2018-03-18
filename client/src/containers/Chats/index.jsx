@@ -2,11 +2,17 @@ import React, { PureComponent } from 'react';
 import ChatList from '../ChatList';
 import ChatDetail from '../ChatDetail';
 
+import { connect } from '../../utils/socket';
+
 import './chats.css';
 
 class Chat extends PureComponent {
-    // constructor() {
-    // }
+    constructor() {
+        super();
+    }
+    componentDidMount() {
+        connect();
+    }
     render() {
         return(
             <div className="main">
