@@ -1,15 +1,15 @@
 const initialState = {
-  count: 0
+  messages: []
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case 'INCREMENT':
+    case 'SEND_MESSAGE':
       return {
         ...state,
-        count: state.count + 1
+        messages: [...state.messages, action.message]
       };
-      
+
     default:
       return state;
   }

@@ -1,11 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-// import Home from '../home';
 import Chats from '../Chats';
 
-const Main = () => (
+const Main = ({ socket }) => (
     <main>
-      <Route exact path="/" component={Chats} />
+      <Route exact path="/" component={Chats} socket={socket}/>
     </main>
 );
 

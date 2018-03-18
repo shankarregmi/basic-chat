@@ -5,9 +5,8 @@ import ChatDetail from '../ChatDetail';
 import './chats.css';
 
 class Chat extends PureComponent {
-    constructor() {
-        super();
-    }
+    // constructor() {
+    // }
     render() {
         return(
             <div className="main">

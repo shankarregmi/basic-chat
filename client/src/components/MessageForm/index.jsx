@@ -1,12 +1,12 @@
 import React from 'react';
 
-import "./message-form.scss";
+import "./message-form.css";
 
 export default function(props) {
     return (
         <div>
           <form>
-            <div className="smessage-form">
+            <div className="message-form">
               <label htmlFor="message-input"></label>
               <div className="input-group">
                 <div className="input-group-addon">+</div>

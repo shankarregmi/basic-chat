@@ -3,15 +3,15 @@ import React, { PureComponent } from 'react';
 import './chatlist.css';
 
 class ChatList extends PureComponent {
-    constructor() {
-        super();
-    }
+    // constructor() {
+    //     super();
+    // }
     render() {
         return(
             <div className="list">
-                <h1>
+                <h5>
                     This is Chat List Section
-                </h1>
+                </h5>
             </div>
         )
     }
