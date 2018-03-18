@@ -1,0 +1,15 @@
+.chat-list {
+    line-height: 30px;
+    background-color: #80a3d5;
+    width: 260px;
+    height: 100vh;
+    float: left;
+    position: relative;
+}
+.chat-detail {
+    height: calc(100vh - 55px);
+    max-width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
