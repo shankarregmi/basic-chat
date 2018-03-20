@@ -7,12 +7,15 @@ import { connect } from '../../utils/socket';
 import './chats.css';
 
 class Chat extends PureComponent {
-    constructor() {
-        super();
-    }
     componentDidMount() {
         connect();
     }
+
+    logout = () => {
+        window.localStorage.clear();
+        this.props.history.push('/login');
+    }
+
     render() {
         return(
             <div className="main">
@@ -21,6 +24,11 @@ class Chat extends PureComponent {
                 </div>
                 <div className="chat-detail">
                     <ChatDetail/>
+                </div>
+                <div className="logout-container">
+                    <button onClick={this.logout}>
+                        <i className="glyphicon glyphicon-off"></i>
+                    </button>
                 </div>
             </div>
         )

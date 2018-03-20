@@ -2,12 +2,12 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const PrivateRoute = ({ component: Component, isAuth, ...rest }) => {
+const PrivateRoute = ({ component: Component, isLoggedIn, ...rest }) => {
   return (
     <Route
       {...rest}
       render={props => (
-        (isAuth) ? (
+        (isLoggedIn) ? (
           <Component {...props} />
         ) : (
             <Redirect
@@ -25,7 +25,7 @@ const PrivateRoute = ({ component: Component, isAuth, ...rest }) => {
 PrivateRoute.propTypes = {
   component: PropTypes.any,
   location: PropTypes.object,
-  isAuth: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default PrivateRoute;

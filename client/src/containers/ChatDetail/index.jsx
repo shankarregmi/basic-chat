@@ -11,8 +11,6 @@ import MessagePreview from '../../components/MessagePreview';
 
 class ChatList extends PureComponent {
     constructor(props) {
-        console.log(props);
-        
         super(props);
         this.state = {
             message: ''

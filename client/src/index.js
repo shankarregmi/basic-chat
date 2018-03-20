@@ -3,9 +3,8 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import store, { history } from './store';
-import Main from './containers/Main';
+import Routes from './routes';
 
-import 'sanitize.css/sanitize.css';
 import './index.css';
 
 const target = document.querySelector('#root');
@@ -13,7 +12,7 @@ const target = document.querySelector('#root');
 render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
-      <Main />
+      <Routes />
     </ConnectedRouter>
   </Provider>,
   target

@@ -5,7 +5,8 @@ import React, { PureComponent } from 'react';
 export default class FBLogin extends PureComponent {
   constructor(props) {
     super(props);
-    
+    this.checkLoginState = this.checkLoginState.bind(this);
+    this.clickHandler = this.clickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -29,14 +30,14 @@ export default class FBLogin extends PureComponent {
     };
   }
 
-  responseApi = (authResponse) => {
+  responseApi (authResponse) {
     FB.api('/me', { fields: this.props.fields }, (me) => {
       me.accessToken = authResponse.accessToken;
       this.props.responseHandler(me);
     });
   };
 
-  checkLoginState = (response) => {
+  checkLoginState (response) {
     if (response.authResponse) {
       this.responseApi(response.authResponse);
     } else {
