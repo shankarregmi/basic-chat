@@ -1,18 +1,38 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+'use strict';
 
-app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
-});
+const fs = require('fs');
+const mongoose = require('mongoose');
+const app = require('express')();
+const Server = require('http').Server(app);
+const bodyParser = require('body-parser')
+const port = process.env.PORT || 9000;
+const config = require('./config');
 
-io.on('connection', function(socket){
-  console.log('a user connected');
-  socket.on('disconnect', function(){
-    console.log('user disconnected');
+
+// start mongodb connection
+mongoose.connect(config.db, {
+  keepAlive: 1,
+  connectTimeoutMS: 30000
+}).then(() => {
+  Server.listen(port, () => {
+    console.log(`Server is running on port ${port}.`);
   });
+}, console.log);
+
+// start socket.io
+const io = require('socket.io')(Server);
+
+
+// middleware for bodyparser
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // enable CORS from client side
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
 });
 
-http.listen(9000, function(){
-  console.log('listening on *:9000');
-});
+module.exports = Server;
