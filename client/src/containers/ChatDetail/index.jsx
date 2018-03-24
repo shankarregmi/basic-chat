@@ -34,6 +34,8 @@ class ChatList extends PureComponent {
     render() {
         return(
             <div className="chat-detail-main">
+            <h2>#{this.props.currentChannel.name}</h2>
+            <hr/>
             <MessagePreview messages={this.props.messages}/>
                 <div className="footer">
                     <MessageForm onEnter={this.sendMessage} handleChange={this.handleChange} value={this.state.message} />
