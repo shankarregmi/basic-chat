@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Channels = mongoose.model('Channels');
 
 const Schema = mongoose.Schema;
 
@@ -23,5 +24,16 @@ UserSchema.statics.findOneOrCreate = function(condition, callback) {
       return callback(err, result)
     })
   })
-}
+};
+
+// aftersave hook
+// automatically join user to #general channel
+UserSchema.post('save', (user, next) => {
+  Channels.update({ name: 'general' }, { $push: { participants: user._id }}, (err, raw) => {
+    if (!err) {
+      next();
+    }
+  });
+});
+
 module.exports = mongoose.model('Users', UserSchema);

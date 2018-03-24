@@ -9,11 +9,11 @@ const MessageSchema = new Schema({
   },
   author: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Users'
   },
   channel: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'Channels'
   }
 },
   {
