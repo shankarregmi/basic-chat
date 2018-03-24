@@ -1,25 +1,41 @@
 import * as auth from '../utils/auth';
+import {
+    history
+} from '../store';
 
 export const loginSuccess = (user) => {
     return {
-        type: LOGIN_SUCCESS,
+        type: 'LOGIN_SUCCESS',
         user
     };
 };
 
+export const logoutSuccess = () => {
+    return {
+        type: 'LOGOUT_SUCCESS',
+    };
+};
+
 export const login = (username) => {
-    return (dispatch, getState) => {
-        return auth.login(username)
-            .then((data) => {
-                dispatch(loginSuccess(data));
-                cb();
+    return dispatch => {
+        auth.login(username)
+            .then((user) => {
+                dispatch(loginSuccess(user));
+                history.push('/');
             }).catch((error) => {
-                dispatch(loginFailed(error, intl(localeMessages)
-                    .formatMessage(messages.email_password_dont_match)));
+                console.log('Err');
             });
     };
 };
 
 export const logout = () => {
-    auth.logout();
+    return (dispatch, getState) => {
+        return auth.logout()
+            .then(() => {
+                dispatch(logoutSuccess());
+                history.push('/login');
+            }).catch((error) => {
+                console.log('Err');
+            });
+    };
 }

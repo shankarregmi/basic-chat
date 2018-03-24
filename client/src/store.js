@@ -17,7 +17,7 @@ const logger = store => next => action => {
 
 const initialState = {};
 const enhancers = [];
-const middleware = [logger, thunk, routerMiddleware(history)];
+const middleware = [thunk, routerMiddleware(history), logger];
 
 
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);

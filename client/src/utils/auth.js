@@ -1,6 +1,9 @@
-export const setToken = (token) => {
+import axios from 'axios';
+
+export const setItem = (user) => {
   try {
-    window.localStorage && window.localStorage.setItem('TOKEN', token);
+    window.localStorage.setItem('TOKEN', user._id);
+    window.localStorage.setItem('User', JSON.stringify(user));
   } catch (error) {
       throw new Error('Cannot set token on localstorage');
   }
@@ -16,13 +19,26 @@ export const isLoggedIn = () => {
 };
 
 export const login = (username) => {
-  setToken('somefaketoken');
-}
+  return new Promise((resolve, reject) => {
+    axios.post('http://localhost:9000/login', {
+      username
+    }).then((response) => {
+      if (response && response.data) {
+        setItem(response.data); // use _id as token
+        resolve(response.data);
+      }
+    }).catch(reject);
+  });
+};
 
 export const logout = () => {
-  try {
-    window.localStorage && window.localStorage.removeItem('TOKEN');
-  } catch (error) {
-      throw new Error('Cannot remove token on localstorage');
-  }
+  return new Promise((resolve, reject) => {
+    try {
+      window.localStorage && window.localStorage.removeItem('TOKEN');
+      resolve();
+    } catch (error) {
+        const err = new Error('Cannot remove token on localstorage');
+        reject(err);
+    }
+  });
 }

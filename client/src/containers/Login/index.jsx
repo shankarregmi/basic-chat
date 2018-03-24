@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import LoginForm from '../../components/LoginForm';
-import { login } from '../../utils/auth';
+import { login } from '../../actions/authActions';
 import './login.css'
 
 class Login extends PureComponent {
@@ -12,16 +15,12 @@ class Login extends PureComponent {
         const username = value;
         this.setState({
             username
-        })
+        });
     }
     login = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            login();
-            this.props.history.push('/');
-            this.setState({
-                username: ''
-            });
+            this.props.actions.login(this.state.username);
           }
     }
 
@@ -34,4 +33,17 @@ class Login extends PureComponent {
     }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return { data: state };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({
+      login,
+    }, dispatch),
+  };
+};
+
+// Wrap the component to inject dispatch and state into it
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

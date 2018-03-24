@@ -4,9 +4,14 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import PrivateRoute from './containers/Main/PrivateRoute';
 import Chats from './containers/Chats';
 import Login from './containers/Login';
-
+import store from './store';
 
 import { isLoggedIn } from './utils/auth';
+import { loginSuccess } from './actions/authActions';
+if (isLoggedIn) {
+  const user = JSON.parse(window.localStorage.getItem('User'));
+  store.dispatch(loginSuccess(user));
+}
 
 
 const Routes = () => {

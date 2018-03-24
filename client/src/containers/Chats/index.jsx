@@ -1,26 +1,31 @@
 import React, { PureComponent } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 import ChatList from '../ChatList';
 import ChatDetail from '../ChatDetail';
 
-import { connect } from '../../utils/socket';
+import { connect as io, disconnect } from '../../utils/socket';
+import { logout } from '../../actions/authActions';
 
 import './chats.css';
 
 class Chat extends PureComponent {
     componentDidMount() {
-        connect();
+        io();
     }
 
     logout = () => {
-        window.localStorage.clear();
-        this.props.history.push('/login');
+        this.props.actions.logout();
+        disconnect();
     }
 
     render() {
+        console.log('chatmain', this.props);
         return(
             <div className="main">
                 <div className="chat-list">
-                    <ChatList/>
+                    <ChatList user={this.props.user}/>
                 </div>
                 <div className="chat-detail">
                     <ChatDetail/>
@@ -34,5 +39,20 @@ class Chat extends PureComponent {
         )
     }
 }
+const mapStateToProps = state => {
+    const { user } = state.auth;
+    return {
+        user
+    }
+};
 
-export default Chat;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({
+      logout,
+    }, dispatch),
+  };
+};
+
+// Wrap the component to inject dispatch and state into it
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);

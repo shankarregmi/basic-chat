@@ -7,7 +7,7 @@ const Server = require('http').Server(app);
 const bodyParser = require('body-parser')
 const port = process.env.PORT || 9000;
 const config = require('./config');
-
+const socketIOEvents = require('./socketIOEvents');
 
 // start mongodb connection
 mongoose.connect(config.db, {
@@ -22,6 +22,7 @@ mongoose.connect(config.db, {
 // start socket.io
 const io = require('socket.io')(Server);
 
+socketIOEvents(io);
 
 // middleware for bodyparser
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,5 +35,7 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Credentials', 'true');
   next();
 });
+
+require('./routes')(app);
 
 module.exports = Server;

@@ -4,10 +4,14 @@ let socket;
 
 export const connect = () => {
   try {
-    socket = io.connect('http://localhost:9000');
+    socket = io.connect('http://localhost:9000/');
 
     return socket;
   } catch (ioNotBoundErr) {
     throw new Error('Unable to connect to socket server');
   }
+};
+
+export const disconnect = () => {
+  socket.disconnect();
 };
