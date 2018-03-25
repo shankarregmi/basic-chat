@@ -1,12 +1,258 @@
-@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
-* {
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css');
+*,
+*:after,
+*:before {
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
+  list-style: none;
+  outline: none;
+  border: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  letter-spacing: 0.05em;
 }
 
 body {
-  padding-bottom: 40px;
-  font-family: 'Open Sans', sans-serif;
-  overflow-x: hidden;
+  font-size: 1em;
+  font-family: 'Lato', sans-serif;
+}
+
+.chat-window {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.chat-window .row {
+  margin: 0;
+}
+
+.chat-window .left-bar {
+  float: left;
+  width: 20% !important;
+  height: 100vh;
+  min-width: 200px !important;
+  overflow-y: auto;
+  background: #536976;
+  background: -webkit-linear-gradient(to right, #141414, #282828);
+  background: -webkit-gradient(linear, left top, right top, from(#141414), to(#282828));
+  background: -webkit-linear-gradient(left, #141414, #282828);
+  background: -o-linear-gradient(left, #141414, #282828);
+  background: linear-gradient(to right, #141414, #282828);
+}
+
+.chat-window .left-bar * {
+  color: #fff;
+}
+
+.chat-window .left-bar .title {
+  padding: 20px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chat-window .left-bar .title h4 {
+  font-size: 17px;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+.chat-window .left-bar .title h4 span {
+  font-weight: 400;
+}
+
+.chat-window .left-bar .content {
+  padding: 15px;
+}
+
+.chat-window .left-bar .content .c-header {
+  font-size: 20px;
+  font-weight: 300;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+
+.chat-window .left-bar .content .c-header .addbutton {
+  font-size: 25px;
+}
+
+.chat-window .left-bar .content .c-header .addbutton:hover {
+  text-decoration: none;
+  text-shadow: 0 0 3px #fff;
+}
+
+.chat-window .left-bar .content .c-body {
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.chat-window .left-bar .content .c-body li {
+  padding: 4px 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-left: 5px solid transparent;
+  cursor: pointer;
+}
+
+.chat-window .left-bar .content .c-body li:hover {
+  border-left-color: #0099e5;
+}
+.chat-window .left-bar .content .c-body li.active {
+  border-left-color: #0099e5;
+}
+
+.chat-window .left-bar .content .c-body li .name i,
+.chat-window .left-bar .content .c-body li .name span {
+  color: #797979;
+}
+
+.chat-window .left-bar .content .c-body li .badge {
+  background-color: #f47721;
+  color: #fff;
+}
+
+.chat-window .left-bar .content .c-body li.active .name i,
+.chat-window .left-bar .content .c-body li.active .name span {
+  color: #fff;
+}
+
+.chat-window .left-bar .content .c-body li:not(:last-child) {
+  margin-bottom: 5px;
+}
+
+.chat-window .right-bar {
+  width: 80%;
+  height: 100vh;
+  background-color: #EEF3F7;
+  overflow-y: auto;
+}
+
+.chat-window .right-bar .footer,
+.chat-window .right-bar .title {
+  background-color: #fff;
+  height: 60px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 15px;
+}
+
+.chat-window .right-bar .title .logout {
+  display: block;
+  padding: 2px 12px;
+  background-color: transparent;
+  border-radius: 30px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.chat-window .right-bar .title .logout:hover {
+  background-color: #f47721;
+  color: #fff;
+  border: 1px solid #f0690c;
+}
+
+.chat-window .right-bar .footer form {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.chat-window .right-bar .footer input.chat-input {
+  width: calc(100% - 5px);
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.chat-window .right-bar .footer input.send-button {
+  display: block;
+  width: 50px;
+  text-transform: capitalize;
+  text-align: right;
+  font-weight: 700;
+}
+
+.chat-window .right-bar .body {
+  height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.chat-window .right-bar .body .text {
+  width: 100%;
+  display: inline-block;
+  padding: 10px 15px;
+}
+
+.chat-window .right-bar .body .text:not(:last-child) {
+  border-bottom: 1px solid #f9f9f9;
+}
+
+.chat-window .right-bar .body .text .profile-pic {
+  width: 40px;
+  height: 40px;
+  float: left;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.chat-window .right-bar .body .text .profile-pic img {
+  width: 100%;
+}
+
+.chat-window .right-bar .body .text .message-detail {
+  width: calc(100% - 40px);
+  float: left;
+  padding-left: 15px;
+}
+
+.chat-window .right-bar .body .text .message-detail .profile .name {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.chat-window .right-bar .body .text .message-detail .profile .name small {
+  color: #696565;
+  padding-left: 8px;
+  font-size: 12px;
+}
+
+.chat-window .right-bar .body .text .message-detail .msg p {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.8em;
+  color: #696565;
+  margin-bottom: 0;
+}
+
+.chat-window .right-bar .body .text .message-detail .msg p:not(:last-child) {
+  margin-bottom: 8px;
 }

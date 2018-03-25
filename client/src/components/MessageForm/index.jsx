@@ -4,15 +4,10 @@ import "./message-form.css";
 
 export default function(props) {
     return (
-        <div>
+        <div className="footer">
           <form>
-            <div className="message-form">
-              <label htmlFor="message-input"></label>
-              <div className="input-group">
-                <div className="input-group-addon">+</div>
-                <input type="text" className="form-control" value={props.value} onChange={props.handleChange} onKeyPress={props.onEnter}/>
-              </div>
-            </div>
+          <input type="text" className="chat-input" value={props.value} onChange={props.handleChange} onKeyPress={props.onEnter} autoFocus/>
+          <i className="glyphicon glyphicon-send"></i>
           </form>
         </div>
     )

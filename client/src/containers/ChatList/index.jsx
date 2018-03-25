@@ -3,9 +3,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { changeChannel } from '../../actions/channelActions';
-import './chatlist.css';
+import ListView from '../../components/ListView';
 
 class ChatList extends PureComponent {
+    state = {
+        channels: [],
+        activeChannel: {}
+    }
     
     changeRoom = (channel) => {
         if (channel.name !== this.props.activeChannel.name) {
@@ -13,6 +17,7 @@ class ChatList extends PureComponent {
         }
     }
     componentWillReceiveProps(nextProps) {
+        this.setState(nextProps);
         if (nextProps.activeChannel && nextProps.socket) {
             // on initialization subscribe to the active channel
             this.props.actions.changeChannel(nextProps.socket, nextProps.activeChannel);
@@ -23,27 +28,13 @@ class ChatList extends PureComponent {
         const channels = this.props.channels;
         const users = this.props.users;
         return(
-            <div className="list">
-                <span className="welcome-text">Welcome</span>
-                <span className="user-name">{username}</span>
-                <hr/>
-                <div className="channels">
-                    <h2>Channels <span className="glyphicon glyphicon-plus"></span></h2>
-                    {
-                        channels.map((channel, id) => {
-                            return <h4 key={id} onClick={()=> this.changeRoom(channel)}>&nbsp;#{channel.name}</h4>
-                        })
-                    }
+            <div className="left-bar">
+                <div className="tittle">
+                <h4>Welcome, <span>{username} </span></h4>
                 </div>
-                <hr/>
-                <div className="users">
-                    <h2>Users</h2>
-                    {
-                        users.map((user, id) => {
-                            return <h4 key={id}>&nbsp;{user.username}</h4>
-                        })
-                    }
-                </div>
+                <ListView array={channels} heading="Channels" name="name" activeChannel={this.state.activeChannel} />
+                <ListView array={users} heading="Users" name="username" />
+                
             </div>
         )
     }

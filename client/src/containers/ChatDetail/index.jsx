@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import { sendMessage } from '../../actions/messageActions';
 
-import './chatdetail.css';
-
 import MessageForm from '../../components/MessageForm';
 import MessagePreview from '../../components/MessagePreview';
 
@@ -40,13 +38,15 @@ class ChatList extends PureComponent {
     }
     render() {
         return(
-            <div className="chat-detail-main">
-            <h2>#{this.props.activeChannel.name}</h2>
-            <hr/>
-            <MessagePreview messages={this.props.messages} channel={this.props.activeChannel} users={this.props.users}/>
-                <div className="footer">
-                    <MessageForm onEnter={this.sendMessage} handleChange={this.handleChange} value={this.state.message} />
+            <div className="right-bar">
+                <div className="message-box">
+                    <div className="title">
+                        <h4>#{this.props.activeChannel.name}</h4>
+                        <div className="logout">Logout</div>
+                    </div>
+                    <MessagePreview messages={this.props.messages} channel={this.props.activeChannel} users={this.props.users} />
                 </div>
+                <MessageForm onEnter={this.sendMessage} handleChange={this.handleChange} value={this.state.message} />
             </div>
         )
     }

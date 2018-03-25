@@ -16,7 +16,7 @@ if (isLoggedIn()) {
 
 const Routes = () => {
   return (
-    <div>
+    <div className="container-fluid chat-window">
         {isLoggedIn() && <PrivateRoute isLoggedIn={isLoggedIn()} component={Chats} />}
         <Switch>
             <Route
