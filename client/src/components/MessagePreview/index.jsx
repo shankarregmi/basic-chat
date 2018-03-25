@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function({ messages }) {
+export default function({ messages, channel }) {
     return (
         <div>
           {
-              messages.map((message, id) => <h3 key={id}>{message} </h3>)
+              messages.filter(message => message.channel === channel._id).map((message, id) => <h3 key={id}>{message.body} </h3>)
           }
         </div>
     )

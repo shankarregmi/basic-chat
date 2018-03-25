@@ -1,16 +1,25 @@
 import React, { PureComponent } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
+import { changeChannel } from '../../actions/channelActions';
 import './chatlist.css';
 
 class ChatList extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = {
-            count: 1
-        };
     }
-    changeRoom = (room) => {
-        console.log('room', room);
+    
+    changeRoom = (channel) => {
+        if (channel.name !== this.props.activeChannel.name) {
+            this.props.actions.changeChannel(this.props.socket, channel);
+        }
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.activeChannel && nextProps.socket) {
+            // on initialization subscribe to the active channel
+            this.props.actions.changeChannel(nextProps.socket, nextProps.activeChannel);
+        }
     }
     render() {
         const username = this.props.user ? this.props.user.username : null;
@@ -33,4 +42,10 @@ class ChatList extends PureComponent {
     }
 }
 
-export default ChatList;
+export default connect(null, (dispatch) => {
+    return {
+    actions: bindActionCreators({
+        changeChannel
+    }, dispatch),
+  };
+})(ChatList);

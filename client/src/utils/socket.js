@@ -1,5 +1,7 @@
 import io from 'socket.io-client';
 
+import store from '../store';
+import { sendMessageSuccess } from '../actions/messageActions';
 let socket;
 
 export const connect = () => {
@@ -15,3 +17,9 @@ export const connect = () => {
 export const disconnect = () => {
   socket.disconnect();
 };
+
+export const socketEvents = () => {
+  socket.on('RECEIVE_MESSAGE', (data) => {
+    store.dispatch(sendMessageSuccess(data));
+  })
+}

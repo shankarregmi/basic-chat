@@ -5,27 +5,34 @@ const clients = []; // all connected sockets
 module.exports = (io) => {
   io.on('connection', (socket) => {
     console.log('new socket connection', socket.id);
-    afterLoginSuccess(socket);
-
+    
+  
     socket.on('LOAD_MY_CHANNELS', (userId, callback) => {
       db.Channels.find({participants: userId}).then((channels) => {
         callback(channels);
       });
-    })
+    });
 
-    socket.on('disconnect', (socket) => {
-      console.log('socket disconnected', socket.id);
-      io.clients((err, clients) => {
-        console.log(clients);
+    socket.on('SET_ACTIVE_CHANNEL', (channel, callback) => {
+      socket.join(channel.name);
+      callback(true);
+    });
+
+    socket.on('SEND_MESSAGE', (data, callback) => {
+      db.Messages.create(data).then((msg) => {
+        db.Messages.populate(msg, {path: 'channel'}, function(err, _msg) {
+          const response = {
+            body: _msg.body,
+            author: _msg.author,
+            channel: _msg.channel._id
+          }
+          socket.to(_msg.channel.name).emit('RECEIVE_MESSAGE', data);
+          callback(true);
+        })
       })
     });
+
 
   });
 };
 
-function afterLoginSuccess(socket){
-  socket.on('LOGIN_SUCCESS', function(username, callback) {
-    console.log('username', username);
-    callback(new Error('error'));
-  });
-}

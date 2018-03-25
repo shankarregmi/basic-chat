@@ -25,18 +25,25 @@ class ChatList extends PureComponent {
     sendMessage = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            this.props.actions.sendMessage(this.state.message);
-            this.setState({
-                message: ''
-            });
+            if (this.state.message.trim().length) {
+                const data = {
+                    body: this.state.message,
+                    author: this.props.user._id,
+                    channel: this.props.activeChannel._id
+                };
+                this.props.actions.sendMessage(this.props.socket, data);
+                this.setState({
+                    message: ''
+                });
+            }
           }
     }
     render() {
         return(
             <div className="chat-detail-main">
-            <h2>#{this.props.currentChannel.name}</h2>
+            <h2>#{this.props.activeChannel.name}</h2>
             <hr/>
-            <MessagePreview messages={this.props.messages}/>
+            <MessagePreview messages={this.props.messages} channel={this.props.activeChannel}/>
                 <div className="footer">
                     <MessageForm onEnter={this.sendMessage} handleChange={this.handleChange} value={this.state.message} />
                 </div>

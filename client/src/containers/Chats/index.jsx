@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import ChatList from '../ChatList';
 import ChatDetail from '../ChatDetail';
 
-import { connect as socket, disconnect } from '../../utils/socket';
+import { connect as socket, disconnect , socketEvents} from '../../utils/socket';
 import { logout } from '../../actions/authActions';
 import { loadChannels } from '../../actions/channelActions';
 import './chats.css';
@@ -15,19 +15,21 @@ class Chat extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            myChannels: []
+            myChannels: [],
+            activeChannel: {}
         };
     }
+    socket = null
+
     componentDidMount() {
-        const io = socket();
-        this.props.actions.loadChannels(io, this.props.user._id);
+        this.socket = socket();
+        socketEvents();
+        this.props.actions.loadChannels(this.socket, this.props.user._id);
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.myChannels && nextProps.myChannels.length) {
-            this.setState({
-                myChannels: nextProps.myChannels
-            });
+        this.setState(nextProps);
+        if (nextProps.activeChannel) {
         }
     }
 
@@ -40,10 +42,10 @@ class Chat extends PureComponent {
         return(
             <div className="main">
                 <div className="chat-list">
-                    <ChatList user={this.props.user} channels={this.state.myChannels} />
+                    <ChatList user={this.props.user} channels={this.state.myChannels} activeChannel={this.state.activeChannel} socket={this.socket} />
                 </div>
                 <div className="chat-detail">
-                    {this.state.myChannels && this.state.myChannels.length && <ChatDetail currentChannel={this.state.myChannels[0]} />}
+                    {this.state.myChannels && this.state.myChannels.length && <ChatDetail activeChannel={this.state.activeChannel} user={this.props.user} socket={this.socket} />}
                 </div>
                 <div className="logout-container">
                     <button onClick={this.logout}>
@@ -56,10 +58,11 @@ class Chat extends PureComponent {
 }
 const mapStateToProps = state => {
     const { user } = state.auth;
-    const { myChannels } = state.channels;
+    const { myChannels, activeChannel } = state.channels;
     return {
         user,
-        myChannels
+        myChannels,
+        activeChannel
     }
 };
 
@@ -73,4 +76,4 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 // Wrap the component to inject dispatch and state into it
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Chat));
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);
