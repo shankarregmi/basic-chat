@@ -5,7 +5,7 @@ export default function({ messages, channel, users }) {
         return users.length && users.filter(user => user._id === authorId)[0].username;
     }
     return (
-        <div>
+        <div className="message-preview">
           {
               messages.filter(message => message.channel === channel._id).map((message, id) => {
                   return (

@@ -15,7 +15,9 @@ module.exports = (io) => {
 
     socket.on('SET_ACTIVE_CHANNEL', (channel, callback) => {
       socket.join(channel.name);
-      callback(true);
+      db.Messages.find({channel: channel._id}).then((messages) => {
+      callback(messages);
+      })
     });
 
     socket.on('SEND_MESSAGE', (data, callback) => {

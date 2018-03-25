@@ -1,3 +1,5 @@
+import { loadPreviousMessages } from './messageActions';
+
 const loadChannelsSuccess = channels => {
     return { type: 'LOAD_CHANNEL_SUCCESS', channels};
 }
@@ -18,9 +20,10 @@ const changeChannelSuccess = channel => {
 
 export const changeChannel = (socket, channel) => {
     return dispatch => {
-        socket.emit('SET_ACTIVE_CHANNEL', channel, (status) => {
-            if (status) {
+        socket.emit('SET_ACTIVE_CHANNEL', channel, (channelMessages) => {
+            if (channelMessages) {
                 dispatch(changeChannelSuccess(channel));
+                dispatch(loadPreviousMessages(channelMessages));
             }
         });
     };

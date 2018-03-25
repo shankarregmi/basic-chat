@@ -1,3 +1,10 @@
+export const loadPreviousMessages = messages => {
+  return {
+    type: 'LOAD_PREVIOUS_MESSAGES',
+    messages
+  };
+};
+
 export const sendMessageSuccess = data => {
   return {
     type: 'SEND_MESSAGE',
@@ -14,3 +21,4 @@ export const sendMessage = (socket, data) => {
       });
   };
 };
+
