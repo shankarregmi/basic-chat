@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import ChatList from '../ChatList';
 import ChatDetail from '../ChatDetail';
@@ -24,7 +23,7 @@ class Chat extends PureComponent {
     componentDidMount() {
         this.socket = socket();
         socketEvents();
-        this.props.actions.loadChannels(this.socket, this.props.user._id);
+        this.props.actions.loadChannels(this.socket, this.props.me._id);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -40,27 +39,28 @@ class Chat extends PureComponent {
 
     render() {
         return(
-            <div className="main">
+            this.props.me ? <div className="main">
                 <div className="chat-list">
-                    <ChatList user={this.props.user} channels={this.state.myChannels} activeChannel={this.state.activeChannel} socket={this.socket} />
+                    <ChatList me={this.props.me} channels={this.state.myChannels} activeChannel={this.state.activeChannel} socket={this.socket} users={this.props.users} />
                 </div>
                 <div className="chat-detail">
-                    {this.state.myChannels && this.state.myChannels.length && <ChatDetail activeChannel={this.state.activeChannel} user={this.props.user} socket={this.socket} />}
+                    <ChatDetail activeChannel={this.state.activeChannel} me={this.props.me} socket={this.socket} users={this.props.users} />
                 </div>
                 <div className="logout-container">
                     <button onClick={this.logout}>
                         <i className="glyphicon glyphicon-off"></i>
                     </button>
                 </div>
-            </div>
+            </div> : <span>Loading..</span>
         )
     }
 }
 const mapStateToProps = state => {
-    const { user } = state.auth;
+    const { me, users } = state.auth;
     const { myChannels, activeChannel } = state.channels;
     return {
-        user,
+        me,
+        users,
         myChannels,
         activeChannel
     }

@@ -3,10 +3,10 @@ import {
     history
 } from '../store';
 
-export const loginSuccess = (user) => {
+export const loginSuccess = (response) => {
     return {
         type: 'LOGIN_SUCCESS',
-        user
+        response
     };
 };
 
@@ -19,8 +19,8 @@ export const logoutSuccess = () => {
 export const login = (username) => {
     return dispatch => {
         auth.login(username)
-            .then((user) => {
-                dispatch(loginSuccess(user));
+            .then((response) => {
+                dispatch(loginSuccess(response));
                 history.push('/');
             }).catch((error) => {
                 console.log('Err');

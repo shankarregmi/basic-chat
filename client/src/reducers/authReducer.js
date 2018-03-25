@@ -1,5 +1,6 @@
 const initialState = {
-  user: null
+  me: null,
+  users: null
 };
 
 export default (state = initialState, action) => {
@@ -7,13 +8,15 @@ export default (state = initialState, action) => {
     case 'LOGIN_SUCCESS':
       return {
         ...state,
-        user: action.user
+        me: action.response.me,
+        users: action.response.users
       };
 
     case 'LOGOUT_SUCCESS':
       return {
         ...state,
-        user: null
+        me: null,
+        users: null
       };
 
     default:

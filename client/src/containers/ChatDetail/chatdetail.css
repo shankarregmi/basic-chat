@@ -6,3 +6,6 @@
     color: white;
     text-align: center;
 }
+.chat-detail-username {
+    font-style: italic;
+}

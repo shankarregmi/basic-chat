@@ -4,7 +4,7 @@ module.exports = (app) => {
     console.log('Initializing routes');
 
     app.post('/login', (req, res, next) => {
-        const username = req.body.username;
+        const username = req.body.username.trim();
         
         if (!username) {
             return;
@@ -12,7 +12,12 @@ module.exports = (app) => {
         db.Users.findOneOrCreate({
             username: req.body.username
         }, (err, user) => {
-            res.json(user);
+            db.Users.find().then((users) => {
+                res.json({
+                    me: user,
+                    users
+                });
+            })
         })
     });
 

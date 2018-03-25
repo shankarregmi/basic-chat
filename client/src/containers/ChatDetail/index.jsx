@@ -28,7 +28,7 @@ class ChatList extends PureComponent {
             if (this.state.message.trim().length) {
                 const data = {
                     body: this.state.message,
-                    author: this.props.user._id,
+                    author: this.props.me._id,
                     channel: this.props.activeChannel._id
                 };
                 this.props.actions.sendMessage(this.props.socket, data);
@@ -43,7 +43,7 @@ class ChatList extends PureComponent {
             <div className="chat-detail-main">
             <h2>#{this.props.activeChannel.name}</h2>
             <hr/>
-            <MessagePreview messages={this.props.messages} channel={this.props.activeChannel}/>
+            <MessagePreview messages={this.props.messages} channel={this.props.activeChannel} users={this.props.users}/>
                 <div className="footer">
                     <MessageForm onEnter={this.sendMessage} handleChange={this.handleChange} value={this.state.message} />
                 </div>

@@ -8,7 +8,7 @@ import store from './store';
 
 import { isLoggedIn } from './utils/auth';
 import { loginSuccess } from './actions/authActions';
-if (isLoggedIn) {
+if (isLoggedIn()) {
   const user = JSON.parse(window.localStorage.getItem('User'));
   store.dispatch(loginSuccess(user));
 }

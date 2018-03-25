@@ -6,9 +6,6 @@ import { changeChannel } from '../../actions/channelActions';
 import './chatlist.css';
 
 class ChatList extends PureComponent {
-    constructor(props) {
-        super(props);
-    }
     
     changeRoom = (channel) => {
         if (channel.name !== this.props.activeChannel.name) {
@@ -22,8 +19,9 @@ class ChatList extends PureComponent {
         }
     }
     render() {
-        const username = this.props.user ? this.props.user.username : null;
+        const username = this.props.me ? this.props.me.username : null;
         const channels = this.props.channels;
+        const users = this.props.users;
         return(
             <div className="list">
                 <span className="welcome-text">Welcome</span>
@@ -34,6 +32,15 @@ class ChatList extends PureComponent {
                     {
                         channels.map((channel, id) => {
                             return <h4 key={id} onClick={()=> this.changeRoom(channel)}>&nbsp;#{channel.name}</h4>
+                        })
+                    }
+                </div>
+                <hr/>
+                <div className="users">
+                    <h2>Users</h2>
+                    {
+                        users.map((user, id) => {
+                            return <h4 key={id}>&nbsp;{user.username}</h4>
                         })
                     }
                 </div>
