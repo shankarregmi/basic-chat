@@ -12,3 +12,6 @@ cd client && yarn
 ```bash
 yarn start
 ```
+
+## Before login initialize some data on Mongo
+``` http://localhost:9000/initialize```
