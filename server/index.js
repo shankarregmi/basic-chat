@@ -38,4 +38,7 @@ app.use((req, res, next) => {
 
 require('./routes')(app);
 
-module.exports = Server;
+module.exports = {
+  Server,
+  io
+};

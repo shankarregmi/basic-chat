@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 const Channels = mongoose.model('Channels');
 
+// testing different import
+const { io } = require('../index');
+const io2 = require('../index').io;
+const io3 = require('../').io
+
+console.log(io, io2, io3); // undefined undefined undefined
+
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
